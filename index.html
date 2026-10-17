@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>100 Cards</title>
+<meta name="description" content="Sideways prompts for writing, arranging and recording songs.">
+<meta name="theme-color" content="#0f1a2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="100 Cards">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!--APP-->
+<div class="app" id="app">
+  <header class="top">
+    <h1 class="mark">100 Cards</h1>
+    <p class="count" id="count" aria-live="polite"></p>
+  </header>
+
+  <main class="stage" id="stage">
+    <div class="card" id="card" role="button" tabindex="0" aria-label="Draw another card">
+      <div class="card-inner" id="cardInner">
+        <span class="stamp stamp-keep" aria-hidden="true">keep</span>
+        <span class="stamp stamp-drop" aria-hidden="true">let go</span>
+        <p class="card-tag" id="cardTag"></p>
+        <p class="card-text" id="cardText">Shuffling&hellip;</p>
+        <p class="card-foot" id="cardFoot"></p>
+      </div>
+    </div>
+  </main>
+
+  <p class="hint" id="hint">Tap or shake for another &middot; swipe right to keep, left to let go</p>
+
+  <nav class="filters" id="filters" aria-label="Draw from">
+    <button type="button" data-tag="any" aria-pressed="true">any</button>
+    <button type="button" data-tag="writing" aria-pressed="false">writing</button>
+    <button type="button" data-tag="arranging" aria-pressed="false">arranging</button>
+    <button type="button" data-tag="recording" aria-pressed="false">recording</button>
+    <button type="button" data-tag="mindset" aria-pressed="false">mindset</button>
+  </nav>
+
+  <footer class="bar">
+    <button type="button" class="bar-btn" data-open="saved">Kept <span id="savedCount" class="badge"></span></button>
+    <button type="button" class="bar-btn" data-open="history">History</button>
+    <button type="button" class="bar-btn bar-add" data-open="mine">+ Add my own card</button>
+  </footer>
+
+  <p class="toast" id="toast" role="status" aria-live="polite"></p>
+</div>
+
+<dialog class="sheet" id="sheet" aria-labelledby="sheetTitle">
+  <div class="sheet-head">
+    <div class="tabs" role="tablist">
+      <button type="button" role="tab" data-tab="saved" id="tab-saved">Kept</button>
+      <button type="button" role="tab" data-tab="history" id="tab-history">History</button>
+      <button type="button" role="tab" data-tab="mine" id="tab-mine">My cards</button>
+    </div>
+    <button type="button" class="close" id="sheetClose" aria-label="Close">Done</button>
+  </div>
+  <h2 class="sr-only" id="sheetTitle">Your cards</h2>
+
+  <section class="panel" data-panel="saved" role="tabpanel" aria-labelledby="tab-saved">
+    <ul class="list" id="savedList"></ul>
+    <p class="empty">Nothing kept yet. Swipe a card to the right to keep it here.</p>
+  </section>
+
+  <section class="panel" data-panel="history" role="tabpanel" aria-labelledby="tab-history">
+    <ul class="list" id="historyList"></ul>
+    <p class="empty">Cards you draw will appear here, newest first.</p>
+    <button type="button" class="link-btn" id="clearHistory">Clear history</button>
+  </section>
+
+  <section class="panel" data-panel="mine" role="tabpanel" aria-labelledby="tab-mine">
+    <form class="add" id="addForm" autocomplete="off">
+      <label for="addText">A new card</label>
+      <textarea id="addText" rows="3" maxlength="120" placeholder="Something sideways, in a few words" required></textarea>
+      <div class="add-row">
+        <label class="sr-only" for="addTag">Tag</label>
+        <select id="addTag">
+          <option value="writing">writing</option>
+          <option value="arranging">arranging</option>
+          <option value="recording">recording</option>
+          <option value="mindset">mindset</option>
+        </select>
+        <button type="submit" class="primary">Add to deck</button>
+      </div>
+      <p class="fine">Saved on this device only.</p>
+    </form>
+    <ul class="list" id="mineList"></ul>
+  </section>
+</dialog>
+<!--/APP-->
+<script src="app.js"></script>
+</body>
+</html>
